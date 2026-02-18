@@ -1,0 +1,5 @@
+thevelezlab.com {
+    handle_path /cv-forge* {
+        reverse_proxy cv-forge-frontend:80
+    }
+}
