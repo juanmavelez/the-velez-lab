@@ -8,10 +8,9 @@ help:
 	@echo "Available commands:"
 	@echo "  make network   - Create the shared 'velez-network' if it doesn't exist"
 	@echo "  make gateway   - Start the Caddy Gateway"
-	@echo "  make cv-forge  - Start the CV Forge application"
-	@echo "  make up        - Start all services (Gateway + CV Forge)"
-	@echo "  make down      - Stop all services"
-	@echo "  make deploy    - Rebuild and restart all services"
+	@echo "  make up        - Start the Gateway"
+	@echo "  make down      - Stop the Gateway"
+	@echo "  make deploy    - Rebuild and restart the Gateway"
 	@echo "  make status    - Show status of all running containers"
 	@echo "  make logs      - View logs for the Gateway"
 
@@ -25,28 +24,19 @@ gateway: network
 	@echo "Starting Gateway..."
 	@docker-compose up -d
 
-# Start CV Forge (assumes sibling directory)
-cv-forge: network
-	@echo "Starting CV Forge..."
-	@docker-compose -f ../cv-forge/docker-compose.yml up -d
-
-# Start everything
-up: gateway cv-forge
-	@echo "All services started!"
+# Start everything (Gateway only in this repo context, individual apps manage themselves)
+up: gateway
+	@echo "Gateway started! Apps should be managed via their own repos."
 
 # Stop everything
 down:
-	@echo "Stopping CV Forge..."
-	@docker-compose -f ../cv-forge/docker-compose.yml down
 	@echo "Stopping Gateway..."
 	@docker-compose down
 
-# Rebuild and deploy everything
+# Rebuild and deploy Gateway
 deploy: network
 	@echo "Deploying Gateway..."
 	@docker-compose up -d --build
-	@echo "Deploying CV Forge..."
-	@docker-compose -f ../cv-forge/docker-compose.yml up -d --build
 	@echo "Deployment complete!"
 
 # Check status of containers
