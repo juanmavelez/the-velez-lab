@@ -91,6 +91,16 @@ To SSH into the server securely from your laptop:
 
 ## Configuration
 
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit `.env` and set your domain:
+   ```bash
+   SITE_ADDRESS=thevelezlab.com
+   ```
+
 The routing configuration is managed in the `Caddyfile`.
 
 ```caddy

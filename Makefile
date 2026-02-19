@@ -22,7 +22,7 @@ network:
 # Start the Caddy Gateway
 gateway: network
 	@echo "Starting Gateway..."
-	@docker-compose up -d
+	@docker compose up -d
 
 # Start everything (Gateway only in this repo context, individual apps manage themselves)
 up: gateway
@@ -31,12 +31,12 @@ up: gateway
 # Stop everything
 down:
 	@echo "Stopping Gateway..."
-	@docker-compose down
+	@docker compose down
 
 # Rebuild and deploy Gateway
 deploy: network
 	@echo "Deploying Gateway..."
-	@docker-compose up -d --build
+	@docker compose up -d --build
 	@echo "Deployment complete!"
 
 # Check status of containers
@@ -45,7 +45,7 @@ status:
 
 # View logs (follow)
 logs:
-	@docker-compose logs -f
+	@docker compose logs -f
 
 # Clean network (use with caution)
 clean:

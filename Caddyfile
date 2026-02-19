@@ -1,5 +1,14 @@
-thevelezlab.com {
-    handle_path /cv-forge* {
+{
+    # Global options
+}
+
+# Explicitly handle both http and https to prevent redirect loops behind proxies like Cloudflare
+http://{$SITE_ADDRESS:localhost}, https://{$SITE_ADDRESS:localhost} {
+    handle /cv-forge* {
         reverse_proxy cv-forge-frontend:80
+    }
+
+    handle {
+        respond "The Velez Lab Gateway is active." 200
     }
 }
