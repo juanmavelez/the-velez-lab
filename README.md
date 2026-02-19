@@ -43,7 +43,50 @@ Currently hosted services:
 
 3.  **Start the Gateway**:
     ```bash
-    docker-compose up -d
+    make up
+    ```
+
+    Other useful commands:
+    -   `make deploy`: Rebuild and restart the gateway.
+    -   `make down`: Stop the gateway.
+    -   `make logs`: View gateway logs.
+
+## Automatic Updates (Pull-Based)
+
+This repository uses a **pull-based** deployment strategy to avoid opening SSH ports.
+
+1.  **Make script executable**:
+    ```bash
+    chmod +x ~/the-velez-lab/scripts/auto-deploy.sh
+    ```
+
+2.  **Add Cron Job** (`crontab -e`):
+    ```bash
+    # Check for updates every 5 minutes
+    */5 * * * * ~/the-velez-lab/scripts/auto-deploy.sh >> ~/deploy.log 2>&1
+    ```
+
+## Cloudflare Tunnel (Zero Trust Access)
+
+This lab uses Cloudflare Tunnel to expose services securely without opening ports on the router.
+
+### Setup
+1.  Add your `CLOUDFLARE_TUNNEL_TOKEN` to `.env`.
+2.  Start the tunnel: `make up`.
+
+### SSH Access via Tunnel
+To SSH into the server securely from your laptop:
+
+1.  **Install `cloudflared`** on your laptop.
+2.  **Configure SSH** (`~/.ssh/config`):
+    ```ssh
+    Host <your-domain>
+      User <your-user>
+      ProxyCommand cloudflared access ssh --hostname %h
+    ```
+3.  **Connect**:
+    ```bash
+    ssh <your-user>@<your-domain>
     ```
 
 ## Configuration
