@@ -10,6 +10,5 @@ http://{$SITE_ADDRESS:localhost}, https://{$SITE_ADDRESS:localhost} {
 
 # Subdomain for CV Forge
 cv-forge.thevelezlab.com {
-    rewrite * /cv-forge{uri}
     reverse_proxy cv-forge-frontend:80
 }
