@@ -1,10 +1,16 @@
 # Explicitly handle both http and https to prevent redirect loops behind proxies like Cloudflare
-http://{$SITE_ADDRESS:localhost}, https://{$SITE_ADDRESS:localhost} {
+http: //{$SITE_ADDRESS:localhost}, https://{$SITE_ADDRESS:localhost} {
     # Default response for the main domain (or other subdomains pointed here)
-    respond "The Velez Lab Gateway is active." 200
+    respond "The Velez Lab Gateway is active."200
 }
 
 # Subdomain for CV Forge
-cv-forge.thevelezlab.com {
-    reverse_proxy cv-forge-frontend:80
+http: //cv-forge.thevelezlab.com, https://cv-forge.thevelezlab.com {
+    tls internal
+    reverse_proxy cv-forge-frontend: 80
+}
+
+: 80,
+: 443 {
+    respond "404 Not Found - This domain is not configured on The Velez Lab Gateway."404
 }
