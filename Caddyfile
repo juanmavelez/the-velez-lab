@@ -1,7 +1,3 @@
-
-    # Global options
-}
-
 # Explicitly handle both http and https to prevent redirect loops behind proxies like Cloudflare
 http://{$SITE_ADDRESS:localhost}, https://{$SITE_ADDRESS:localhost} {
     # Default response for the main domain (or other subdomains pointed here)
