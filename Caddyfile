@@ -10,6 +10,12 @@ http: //cv-forge.thevelezlab.com, https://cv-forge.thevelezlab.com {
     reverse_proxy cv-forge-frontend: 80
 }
 
+# Subdomain for IMAGO Search
+http://imago.thevelezlab.com, https://imago.thevelezlab.com {
+    tls internal
+    reverse_proxy imago-challenge:3000
+}
+
 : 80,
 : 443 {
     respond "404 Not Found - This domain is not configured on The Velez Lab Gateway."404
