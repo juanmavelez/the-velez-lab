@@ -1,13 +1,13 @@
-# Explicitly handle both http and https to prevent redirect loops behind proxies like Cloudflare
-http: //{$SITE_ADDRESS:localhost}, https://{$SITE_ADDRESS:localhost} {
-    # Default response for the main domain (or other subdomains pointed here)
-    respond "The Velez Lab Gateway is active."200
+# Main domain for The Velez Lab Blog
+http://{$SITE_ADDRESS:thevelezlab.com}, https://{$SITE_ADDRESS:thevelezlab.com} {
+    tls internal
+    reverse_proxy the-velez-lab-blog:80
 }
 
 # Subdomain for CV Forge
-http: //cv-forge.thevelezlab.com, https://cv-forge.thevelezlab.com {
+http://cv-forge.thevelezlab.com, https://cv-forge.thevelezlab.com {
     tls internal
-    reverse_proxy cv-forge-frontend: 80
+    reverse_proxy cv-forge-frontend:80
 }
 
 # Subdomain for IMAGO Search
@@ -16,7 +16,6 @@ http://imago.thevelezlab.com, https://imago.thevelezlab.com {
     reverse_proxy imago-challenge:3000
 }
 
-: 80,
-: 443 {
-    respond "404 Not Found - This domain is not configured on The Velez Lab Gateway."404
+:80, :443 {
+    respond "404 Not Found - This domain is not configured on The Velez Lab Gateway." 404
 }
